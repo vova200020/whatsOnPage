@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WhatsOnYYC — Discover events in Calgary</title>
+  <meta name="description" content="WhatsOnYYC helps you discover events, experiences, and local offers in Calgary — all in one simple app." />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="WhatsOnYYC — Discover events in Calgary" />
+  <meta property="og:description" content="Events, experiences, and local offers across Calgary — all in one app." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="appiconwhatson.png" />
+  <meta property="og:url" content="index.html" />
+
+  <link rel="icon" href="appiconwhatson.png" />
+
+  <style>
+    :root{
+      --bg:#0b0c10;
+      --card:rgba(255,255,255,.06);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.70);
+      --border:rgba(255,255,255,.12);
+      --accent:#38bdf8;
+      --accent2:#a78bfa;
+      --ok:#34d399;
+      --maxw:1040px;
+      --radius:18px;
+      --shadow:0 12px 40px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(56,189,248,.22), transparent 55%),
+        radial-gradient(800px 560px at 80% 15%, rgba(167,139,250,.18), transparent 55%),
+        radial-gradient(900px 700px at 45% 110%, rgba(52,211,153,.12), transparent 60%),
+        var(--bg);
+      line-height:1.5;
+    }
+    a{color:inherit;text-decoration:none}
+    a.underline{text-decoration:underline;text-underline-offset:3px}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:28px 18px 70px}
+
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:8px 0 24px;
+    }
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.2px}
+    .logo{
+      width:40px;height:40px;border-radius:12px;
+      background:rgba(255,255,255,.06);
+      box-shadow:var(--shadow);
+      display:grid;place-items:center;
+      border:1px solid var(--border);
+      overflow:hidden;
+    }
+    .logo img{width:100%;height:100%;object-fit:cover;display:block}
+    nav{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+    nav a{
+      color:var(--muted);
+      padding:8px 10px;border-radius:12px;
+    }
+    nav a:hover{background:rgba(255,255,255,.06);color:var(--text)}
+
+    .hero{
+      display:grid;grid-template-columns:1.1fr .9fr;
+      gap:22px;align-items:center;margin-top:12px;
+    }
+    @media (max-width:900px){.hero{grid-template-columns:1fr}}
+
+    .pill{
+      display:inline-flex;gap:10px;align-items:center;
+      padding:8px 12px;border:1px solid var(--border);
+      border-radius:999px;background:rgba(255,255,255,.06);
+      color:var(--muted);width:fit-content;
+    }
+    .pill b{color:var(--text);font-weight:750}
+    .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--ok);
+      box-shadow:0 0 0 6px rgba(52,211,153,.14);
+    }
+
+    h1{
+      font-size:clamp(34px,4.5vw,56px);
+      line-height:1.05;margin:14px 0 12px;
+      letter-spacing:-.6px;
+    }
+    .lead{font-size:18px;color:var(--muted);margin:0 0 18px;max-width:60ch}
+
+    .ctaRow{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:18px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:12px 16px;border-radius:14px;border:1px solid var(--border);
+      background:rgba(255,255,255,.06);color:var(--text);
+      font-weight:700;box-shadow:0 10px 22px rgba(0,0,0,.22);
+    }
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.085)}
+    .btnPrimary{
+      background:linear-gradient(135deg, rgba(56,189,248,.95), rgba(167,139,250,.92));
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .btnSmall{padding:10px 12px;font-weight:650;color:var(--muted)}
+    .note{color:var(--muted);font-size:14px;margin-top:10px}
+
+    .phone{
+      border-radius:var(--radius);border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      padding:18px;box-shadow:var(--shadow);
+    }
+    .mockTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;color:var(--muted);font-size:13px}
+    .mockCard{
+      border-radius:16px;border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      padding:14px;margin-bottom:12px;
+    }
+    .mockCard h3{margin:0 0 6px;font-size:15px}
+    .mockCard p{margin:0;color:var(--muted);font-size:13px}
+    .tagRow{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{
+      font-size:12px;color:var(--muted);
+      border:1px solid var(--border);
+      padding:6px 10px;border-radius:999px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .grid{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      background:var(--card);
+      padding:18px;
+      box-shadow:0 10px 26px rgba(0,0,0,.20);
+    }
+    .card h2{margin:0 0 8px;font-size:16px}
+    .card p{margin:0;color:var(--muted)}
+    .section{margin-top:40px;padding-top:16px;scroll-margin-top:24px}
+    .section h2{margin:0 0 8px;font-size:20px;letter-spacing:-.2px}
+    .section p{margin:0;color:var(--muted);max-width:72ch}
+    .sectionDivider{border-top:1px solid var(--border);padding-top:24px;margin-top:48px}
+    .legal{margin-top:18px}
+    .legal h3{margin:16px 0 6px;font-size:16px}
+    .legal ul{margin:6px 0 0 18px;padding:0;color:var(--muted)}
+    .legal li{margin:6px 0}
+
+    footer{
+      margin-top:44px;padding-top:18px;border-top:1px solid var(--border);
+      color:var(--muted);
+      display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+      font-size:14px;
+    }
+    footer a{color:var(--muted)}
+    footer a:hover{color:var(--text)}
+    .miniLinks{display:flex;gap:12px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <img src="appiconwhatson.png" alt="WhatsOnYYC logo" />
+        </div>
+        <div>
+          <div>WhatsOnYYC</div>
+          <div style="color:var(--muted);font-weight:650;font-size:12px;">Made for Calgary</div>
+        </div>
+      </div>
+
+      <nav aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#faq">FAQ</a>
+        <a href="#support">Support</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <div class="pill">
+            <span class="dot" aria-hidden="true"></span>
+            <span><b>Calgary events</b> · music · food · festivals · offers</span>
+          </div>
+
+          <h1>Discover what’s happening in Calgary — today.</h1>
+          <p class="lead">
+            WhatsOnYYC brings local events, experiences, and offers into one simple app.
+            No endless searching — just what’s on in YYC.
+          </p>
+
+          <div class="ctaRow">
+            <!-- TODO: Replace with your real App Store URL -->
+            <a class="btn btnPrimary" href="#" aria-label="Download on the App Store">
+               Download on the App Store
+            </a>
+            <a class="btn btnSmall" href="#support">Contact support</a>
+          </div>
+
+          <p class="note">
+            iOS only. No ad tracking. Basic analytics may be used to improve the app.
+          </p>
+        </div>
+
+        <div class="phone" aria-label="App preview">
+          <div class="mockTop">
+            <span>Tonight in YYC</span>
+            <span>7:30 PM</span>
+          </div>
+
+          <div class="mockCard">
+            <h3>Live Jazz Night</h3>
+            <p>Downtown · 8:00 PM · Music</p>
+            <div class="tagRow">
+              <span class="tag">Music</span>
+              <span class="tag">Downtown</span>
+              <span class="tag">Tickets</span>
+            </div>
+          </div>
+
+          <div class="mockCard">
+            <h3>Food Truck Festival</h3>
+            <p>East Village · Sat · Food & Drink</p>
+            <div class="tagRow">
+              <span class="tag">Food</span>
+              <span class="tag">Festival</span>
+              <span class="tag">Family</span>
+            </div>
+          </div>
+
+          <div class="mockCard" style="margin-bottom:0;">
+            <h3>Local Offer: 20% Off</h3>
+            <p>Kensington · Limited time · Offers</p>
+            <div class="tagRow">
+              <span class="tag">Offer</span>
+              <span class="tag">Local</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="grid" aria-label="Key features">
+        <div class="card">
+          <h2>🔍 Discover events</h2>
+          <p>Browse what’s happening across Calgary — music, nightlife, food, family, and more.</p>
+        </div>
+        <div class="card">
+          <h2>📍 Find what’s nearby</h2>
+          <p>See events and offers by venue and location so you can plan fast.</p>
+        </div>
+        <div class="card">
+          <h2>🏷️ Local offers</h2>
+          <p>Discover promotions from local businesses and venues — in one place.</p>
+        </div>
+      </section>
+
+      <section class="section" aria-label="Who it is for">
+        <h2>Built for people who live in YYC</h2>
+        <p>
+          Students, young professionals, families, and anyone who wants a better way to discover Calgary.
+          WhatsOnYYC is designed specifically for local venues, creators, and communities.
+        </p>
+      </section>
+
+      <section id="faq" class="section" aria-label="FAQ">
+        <h2>FAQ</h2>
+        <div class="grid" style="margin-top:12px;">
+          <div class="card">
+            <h2>Is WhatsOnYYC free?</h2>
+            <p>Yes. The app is free to download and use.</p>
+          </div>
+          <div class="card">
+            <h2>Do I need an account?</h2>
+            <p>You can browse without an account. Sign-in may be required to save items or submit listings.</p>
+          </div>
+          <div class="card">
+            <h2>How do I get support?</h2>
+            <p>Use the support page or email <a class="underline" href="mailto:support@whatsonyyc.com">support@whatsonyyc.com</a>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="support" class="section sectionDivider" aria-label="Support">
+        <h2>Support</h2>
+        <div class="card" style="margin-top:12px;">
+          <h3 style="margin:0 0 8px;">Contact</h3>
+          <p class="muted" style="margin:0 0 8px;">
+            If you need help, found a bug, or want to request a feature, contact us:
+          </p>
+          <p style="margin:0;">
+            Email: <a class="underline" href="mailto:support@whatsonyyc.com">support@whatsonyyc.com</a>
+          </p>
+          <hr style="border:0;border-top:1px solid rgba(255,255,255,.12);margin:16px 0;">
+          <h3 style="margin:0 0 8px;">App Review (Apple)</h3>
+          <p class="muted" style="margin:0;">
+            Reviewers can browse public content. If any feature requires login, we can provide review credentials
+            upon request via the email above.
+          </p>
+        </div>
+      </section>
+
+      <section id="privacy" class="section sectionDivider" aria-label="Privacy Policy">
+        <h2>Privacy Policy</h2>
+        <div class="card legal">
+          <p class="muted" style="margin-top:0;">Effective date: <span id="effective"></span></p>
+
+          <h3>Overview</h3>
+          <p class="muted">
+            WhatsOnYYC (“we”, “us”) is an events discovery app focused on Calgary, Alberta.
+            This policy explains what data we collect, how we use it, and your choices.
+          </p>
+
+          <h3>Information we collect</h3>
+          <ul>
+            <li><b>Account information (if you sign in)</b>: a user identifier and any profile fields you provide (for example, venue name).</li>
+            <li><b>Content you submit</b>: event/offer listings you create (title, description, location, images).</li>
+            <li><b>Location (optional)</b>: approximate location if you enable location features. You can disable this in iOS Settings.</li>
+            <li><b>Usage & diagnostics</b>: basic analytics and crash/diagnostic data to improve stability and performance.</li>
+          </ul>
+
+          <h3>How we use information</h3>
+          <ul>
+            <li>Provide core app functionality (browse and publish listings).</li>
+            <li>Maintain security, prevent abuse, and enforce policies.</li>
+            <li>Improve performance and reliability.</li>
+            <li>Respond to support requests.</li>
+          </ul>
+
+          <h3>Sharing</h3>
+          <p class="muted">
+            We don’t sell personal information. We may use service providers to operate the app (for example,
+            authentication, database/storage, and analytics/crash reporting). These providers process data on our behalf.
+          </p>
+
+          <h3>Data retention</h3>
+          <p class="muted">
+            We retain data only as long as needed for the purposes described above, unless a longer retention is required by law
+            or needed for legitimate purposes (such as fraud prevention).
+          </p>
+
+          <h3>Your choices</h3>
+          <ul>
+            <li>Disable location access in iOS Settings at any time.</li>
+            <li>Request deletion of your account data by emailing <a class="underline" href="mailto:support@whatsonyyc.com">support@whatsonyyc.com</a>.</li>
+          </ul>
+
+          <h3>Contact</h3>
+          <p class="muted">
+            Questions? Email <a class="underline" href="mailto:support@whatsonyyc.com">support@whatsonyyc.com</a>.
+          </p>
+        </div>
+        <p class="muted" style="margin-top:12px;">Last updated: <span id="updated"></span></p>
+      </section>
+
+      <section id="terms" class="section sectionDivider" aria-label="Terms of Service">
+        <h2>Terms of Service</h2>
+        <div class="card legal">
+          <p class="muted" style="margin-top:0;">Effective date: <span id="terms-effective"></span></p>
+
+          <h3>1) Acceptance</h3>
+          <p class="muted">By using WhatsOnYYC, you agree to these Terms. If you don’t agree, do not use the app.</p>
+
+          <h3>2) User content</h3>
+          <p class="muted">
+            If you submit listings (events/offers), you’re responsible for the accuracy and legality of the content.
+            Don’t post misleading, infringing, illegal, hateful, or abusive content.
+          </p>
+
+          <h3>3) Moderation</h3>
+          <p class="muted">
+            We may remove or restrict content or accounts that violate these Terms or harm the community.
+          </p>
+
+          <h3>4) Availability</h3>
+          <p class="muted">
+            We aim to keep the service available, but interruptions and changes may occur.
+          </p>
+
+          <h3>5) Disclaimers</h3>
+          <p class="muted">
+            Events and offers are provided by third parties. We don’t guarantee accuracy, availability, or quality.
+            Verify details with venues/organizers.
+          </p>
+
+          <h3>6) Limitation of liability</h3>
+          <p class="muted">
+            To the maximum extent permitted by law, WhatsOnYYC is not liable for indirect, incidental,
+            or consequential damages arising from use of the app.
+          </p>
+
+          <h3>7) Contact</h3>
+          <p class="muted">
+            Questions? Email <a class="underline" href="mailto:support@whatsonyyc.com">support@whatsonyyc.com</a>.
+          </p>
+        </div>
+        <p class="muted" style="margin-top:12px;">Last updated: <span id="terms-updated"></span></p>
+      </section>
+    </main>
+
+    <footer>
+      <div>© <span id="year"></span> WhatsOnYYC · Made for Calgary 🇨🇦</div>
+      <div class="miniLinks">
+        <a href="#support">Support</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#terms">Terms</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // No analytics/tracking. Just set year.
+    const now = new Date();
+    document.getElementById("year").textContent = now.getFullYear();
+    document.getElementById("effective").textContent = now.toLocaleDateString();
+    document.getElementById("updated").textContent = now.toLocaleDateString();
+    document.getElementById("terms-effective").textContent = now.toLocaleDateString();
+    document.getElementById("terms-updated").textContent = now.toLocaleDateString();
+  </script>
+</body>
+</html>
